@@ -6,6 +6,62 @@ const _       = require('lodash'),
 
 //Include Model
 const Todo = require('../models/todo')
+const Login = require('../models/logins')
+
+//Login Requests
+
+//List all Logins
+server.get('/logins', function(req, res, next) {
+  Login.apiQuery(req.params, function(err, doc) {
+    if (err) {
+      log.error(err)
+      return next(new errors.InvalidContentError(err.errors.name.message))
+    }
+    res.send(doc)
+    next()
+  })
+})
+
+//Get Login by Service Type
+server.get('/logins/:serviceType', function(req, res, next) {
+  Login.findOne({serviceType: req.params.serviceType}, function(err, doc) {
+    if (err) {
+      log.error(err)
+      return next(new errors.InvalidContentError(err.errors.name.message))
+    }
+    res.send(doc)
+    next()
+  })
+})
+
+//Create New Login
+server.post('/logins', function(req, res, next) {
+  let data = req.body || {}
+  let login = new Login(data)
+  login.save(function(err) {
+    if (err) {
+      log.error(err)
+      return next(new errors.InternalError(err.message))
+      next()
+    }
+    res.send(201)
+    next()
+  })
+})
+
+//Delete Login
+server.del('/logins/:login_id', function(req, res, next) {
+  Login.remove({ _id: req.params.login_id }, function(err) {
+    if (err) {
+      log.error(err)
+      return next(new errors.InvalidContentError(err.errors.name.message))
+    }
+    res.send(204)
+    next()
+  })
+})
+
+//Todo Requests
 
 //Post Route
 server.post('/todos', function(req, res, next) {

@@ -9,7 +9,8 @@ const config        = require('./config'),
       winston       = require('winston'),
       bunyanWinston = require('bunyan-winston-adapter'),
       mongoose      = require('mongoose'),
-      corsMiddleware = require('restify-cors-middleware')
+      corsMiddleware = require('restify-cors-middleware'),
+      MongoClient = require('mongodb').MongoClient
 
 global.log = new winston.Logger({
   transports: [
@@ -127,8 +128,11 @@ server.listen(config.port, function() {
     )
 
     require('./routes')
-  })
+  });
 
+  // global.db = MongoClient.connect(config.db.uri, function(err, db) {
+  //   db.close();
+  // })
   global.db = mongoose.connect(config.db.uri)
 
 })
