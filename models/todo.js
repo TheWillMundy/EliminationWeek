@@ -17,6 +17,12 @@ const TodoSchema = new mongoose.Schema({
   targetId: {
     type: String
   },
+  targetIdArray: {
+    type: [String]
+  },
+  pastTargetsArray: {
+    type: [String]
+  },
   personId: {
     type: String
   },
