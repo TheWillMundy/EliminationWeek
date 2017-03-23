@@ -13,6 +13,14 @@ const app = express();
 
 import routes from './routes/routes';
 
+
+const allowCrossDomain = (req, res, next) => {
+		res.header('Access-Control-Allow-Origin', '*.eliminationweek.com');
+		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+		res.header('Access-Control-Allow-Headers', 'Content-Type');
+		next();
+}
+
 app.set('trust proxy', 1);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
