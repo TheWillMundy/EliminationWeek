@@ -105,45 +105,47 @@ const routes = () => {
     });
   });
 
-  router.get('/todos', (req, res, next) => {
-    Todo.apiQuery(req.params.name, (err, todos) => {
-      if (err) {
-        res.status(502).send(err);
-        return;
-      }
-      res.send(doc);
-    });
-  });
+  router.get('/todos/name/:name', (req, res, next) => {
+        Todo.findOne({ name: req.params.name }, (err, doc) => {
+                if (err) {
+                        res.status(502).send(err);
+                        return;
+                }
+                res.send(doc);
+        });
+   });
 
-  router.get('/todos', (req, res, next) => {
-    Todo.apiQuery(req.params.uid, (err, todos) => {
-      if (err) {
-        res.status(502).send(err);
-        return;
-      }
-      res.send(doc);
-    });
-  });
+   router.get('/todos/uid/:uid', (req, res, next) => {
+        Todo.findOne({ userId: req.params.uid }, (err, doc) => {
+                if (err) {
+                        res.status(502).send(err);
+                        return;
+                }
+                res.send(doc);
+        });
+   });
 
-  router.get('/todos', (req, res, next) => {
-    Todo.apiQuery(req.params.personId, (err, todos) => {
-      if (err) {
+   router.get('/todos/personid/:personid', (req, res, next) => {
+      Todo.findOne({ personId: req.params.personid }, (err, doc) => {
+        if (err) {
         res.status(502).send(err);
         return;
       }
       res.send(doc);
+     });
     });
-  });
 
-  router.get('/todos', (req, res, next) => {
-    Todo.apiQuery(req.params.faceId, (err, todos) => {
-      if (err) {
-        res.status(502).send(err);
-        return;
-      }
-      res.send(doc);
-    });
-  });
+
+  router.get('/todos/faceid/:faceid', (req, res, next) => {
+        Todo.findOne({ faceId: req.params.faceId }, (err, doc) => {
+                if (err) {
+                        res.status(502).send(err);
+                        return;
+                }
+                res.send(doc);
+        });
+   });
+
 
   router.put('/todos/:todo_id', (req, res, next) => {
     let data = req.body || {};
