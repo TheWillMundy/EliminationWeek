@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import config from '../config';
 import _ from 'lodash';
 
 mongoose.Promise = global.Promise;
@@ -10,6 +11,16 @@ import Login from '../models/logins';
 import Todo from '../models/todo';
 
 const routes = () => {
+  router.use((req, res, next) => {
+    let apiKey = req.body.apiKey || req.query.apiKey || req.headers['x-access-api-key'];
+    if (apiKey != config.apiKey) {
+      res.status(403).send('Error no such key found...');
+    }
+    else {
+      next();
+    }
+  });
+
   router.get('/logins', (req, res, next) => {
     Login.apiQuery(req.params, function(err, doc) {
       if (err) {
