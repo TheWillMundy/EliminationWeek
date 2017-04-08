@@ -13,7 +13,7 @@ import Todo from '../models/todo';
 const routes = () => {
   router.use((req, res, next) => {
     let apiKey = req.body.apiKey || req.query.apiKey || req.headers['x-access-api-key'];
-    console.log(apiKey);
+    console.log(req.headers['x-access-api-key']);
     if (apiKey != config.apiKey) {
       res.status(403).send('Error no such key found...');
     }
