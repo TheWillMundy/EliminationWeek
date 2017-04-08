@@ -15,9 +15,8 @@ import routes from './routes/routes';
 
 
 const allowCrossDomain = (req, res, next) => {
-	res.header('Access-Control-Allow-Origin', 'http://player.eliminationweek.com');
-	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, OPTIONS');
-	res.header('x-access-api-key: Own Data');
+	// res.header('Access-Control-Allow-Origin', 'http://player.eliminationweek.com');
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 	res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-api-key');
 	res.header('Access-Control-Expose-Headers: x-access-api-key');
 	next();
