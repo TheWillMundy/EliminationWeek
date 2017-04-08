@@ -13,21 +13,20 @@ const app = express();
 
 import routes from './routes/routes';
 
+app.set('trust proxy', 1);
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const allowCrossDomain = (req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	// res.header('Access-Control-Allow-Origin', 'http://player.eliminationweek.com');
 	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-	res.header('Access-Control-Allow-Headers', 'Accept');
+	res.header('Access-Control-Allow-Headers', 'x-access-api-key');
 	// res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-api-key');
 	next();
 }
 
 app.use(allowCrossDomain);
-
-app.set('trust proxy', 1);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', routes());
 app.use((req, res, next) => {

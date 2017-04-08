@@ -12,13 +12,17 @@ import Todo from '../models/todo';
 
 const routes = () => {
   router.use((req, res, next) => {
-    let apiKey = req.body.apiKey || req.query.apiKey || req.headers['x-access-api-key'];
-    console.log(req.get('x-access-api-key'));
-    if (apiKey != config.apiKey) {
-      res.status(403).send('Error no such key found...');
+    if (req.method == 'OPTIONS') {
+      next();
     }
     else {
-      next();
+      let apiKey = req.body.apiKey || req.query.apiKey || req.headers['x-access-api-key'];
+      if (apiKey != config.apiKey) {
+        res.status(403).send('Error no such key found...');
+      }
+      else {
+        next();
+      }
     }
   });
 
